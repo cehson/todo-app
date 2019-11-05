@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import './assets/styles/navigation/style.scss'
 
 const App: React.FC = () => {
   return (
