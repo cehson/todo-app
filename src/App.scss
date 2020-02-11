@@ -1,0 +1,12 @@
+.App {
+  text-align: left;
+}
+
+.main-nav{
+  a {
+    color: #ffffff;
+    &:hover {
+      color: blue;
+    }
+  }
+}

@@ -1,0 +1,37 @@
+.display_flex {
+  display: flex;
+
+  &-justify-content {
+    &--flex-end {
+      justify-content: flex-end;
+    }
+  }
+
+  &-justifyBetween {
+    justify-content: space-between;
+  }
+}
+
+.margin {
+  &_t {
+    &_2 {
+      margin-top: 2rem;
+    }
+
+    &_3 {
+      margin-top: 3rem;
+    }
+
+    &_4 {
+      margin-top: 4rem;
+    }
+
+    &_5 {
+      margin-top: 5rem;
+    }
+  }
+}
+
+.finished {
+  background-color: rgba(215, 40, 40, 0.3);
+}

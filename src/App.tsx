@@ -1,26 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import './assets/styles/navigation/style.scss'
+import Dashboard from './modules/layout/dashboard/index'
+import Navigation from './modules/layout/navigation/index'
+import TodoDetails from './modules/layout/todo-details/index'
+import SignIn from './modules/layout/auth/signIn/index'
+import CreateTodo from './modules/layout/create-todo/index'
+import SignUp from './modules/layout/auth/signUp'
+import { BrowserRouter, Switch, Route, Redirect, useHistory } from 'react-router-dom'
+import './App.scss'
+import './assets/styles/style.scss'
+
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Navigation />
+      <Switch>
+        <Route exact path="/" component={Dashboard} />
+        <Route path="/todo/:id" component={TodoDetails} />
+        <Route path="/signin/" component={SignIn} />
+        <Route path="/signup/" component={SignUp} />
+        <Route path="/create/" component={CreateTodo} />
+      </Switch>
+    </BrowserRouter>
   );
 }
 
