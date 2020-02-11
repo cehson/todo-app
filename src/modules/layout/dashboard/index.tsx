@@ -11,21 +11,11 @@ const Dashboard: React.FC = ({todoList, userList, loggedInUserID}) => {
 
 	let todoLista = [];
 
-	function compare(a, b) {
-		const timeA = a.scheduledTime;
-		const timeB = b.scheduledTime;
-		let comparison = 0;
-		if (timeA > timeB) {
-			comparison = -1;
-		} else if (timeA < timeB) {
-			comparison = 1;
-		}
-		return comparison;
-	}
+
 
 	if (loggedInUserID) {
 		if (todoList && todoList.todos) {
-			todoLista = todoList.todos.sort(compare).filter((el) => {
+			todoLista = todoList.todos.filter((el) => {
 				return el.creatorID === loggedInUserID;
 			});
 		}

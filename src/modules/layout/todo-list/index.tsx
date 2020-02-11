@@ -4,7 +4,7 @@ import Todo from '../todo-details/redux/types';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-const TodoList = ({todos}, props) => {
+const TodoList = ({todos, isLogedIn}) => {
 
 	// ========= state ==================
 	let [searchValue, setSearchValue] = useState('');
@@ -28,10 +28,20 @@ const TodoList = ({todos}, props) => {
 	// 		return el.finished === updatedValue;
 	// 	});
 	// };
-	if(props.isLogedIn && props) {
-		console.log(props.isLogedIn);
 
+	function compare(a, b) {
+		const timeA = a.scheduledTime;
+		const timeB = b.scheduledTime;
+		let comparison = 0;
+		if (timeA > timeB) {
+			comparison = -1;
+		} else if (timeA < timeB) {
+			comparison = 1;
+		}
+		return comparison;
 	}
+
+
 	return (
 		<section className='section'>
 			<div className='container'>
@@ -74,11 +84,9 @@ const TodoList = ({todos}, props) => {
 						<th></th>
 					</tr>
 					</thead>
+					<tbody>
 					{
-
-					}
-					<tbody>{
-						todos && !props.isLogedIn && todos.length ? todos.filter((todo) => {
+						todos  && isLogedIn && todos.length ? todos.sort(compare).filter((todo) => {
 							if (searchByStatus === 'all') {
 								return todos;
 							} else {
@@ -90,20 +98,23 @@ const TodoList = ({todos}, props) => {
 							return (
 								<tr key={index + 1} className={todo.finished ? 'finished' : ''}>
 									<td>{index + 1}</td>
-									<td>{todo.id}</td>
+									<td>{todo.id }</td>
 									<td>{todo.content}</td>
 									<td>{new Date(todo.scheduledTime).toDateString()}</td>
 									<td>{todo.finished ? 'Finished' : 'Not finished'}</td>
 									<td><Link to={'todo/' + todo.id}>Go to</Link></td>
 								</tr>
 							);
-						}) : todos &&  props.isLogedIn  && todos.map((todo: Todo, index: number) => {
+						}) : todos  && !isLogedIn && todos.map((todo: Todo, index: number) => {
 							return (
 								<tr key={index + 1} className={todo.finished ? 'finished' : ''}>
 									<td>{index + 1}</td>
+									<td></td>
 									<td>{todo.content}</td>
+									<td>{new Date(todo.scheduledTime).toDateString()}</td>
 									<td>{todo.finished ? 'Finished' : 'Not finished'}</td>
-									<td><Link to={'todo/' + todo.id}>Go to</Link></td>
+									<td><Link to={'todo/' + todos.findIndex(function(item) {
+										return item.content === todo.content;	}) }>Go to</Link></td>
 								</tr>
 							);
 						})

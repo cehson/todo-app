@@ -1,16 +1,25 @@
-export const deleteTodo = (id: number, creatorID: number) => {
-	return (dispatch, getState, {getFirestore, getFirebase}) => {
-		const firestore = getFirestore();
-		const firebase = getFirebase();
-		firestore.collection('todos').doc(id).delete().then((res) => {
-			dispatch({type: 'DELETE_TODO'});
-			let userRef = firestore.collection('users').doc(creatorID);
-			userRef.update({
-				todos: firebase.firestore.FieldValue.arrayRemove(id)
+
+export const deleteTodo = (id: number, creatorID: number, ownProps) => {
+
+		return (dispatch, getState, {getFirestore, getFirebase}) => {
+			if (creatorID) {
+			const firestore = getFirestore();
+			const firebase = getFirebase();
+			firestore.collection('todos').doc(id).delete().then((res) => {
+				dispatch({type: 'DELETE_TODO'});
+				let userRef = firestore.collection('users').doc(creatorID);
+				userRef.update({
+					todos: firebase.firestore.FieldValue.arrayRemove(id)
+				});
+			}).catch((err) => {
+				console.log(err);
 			});
-		}).catch((err) => {
-			console.log(err);
-		});
+		} else {
+				let localStorageTodos = JSON.parse(localStorage.getItem('todos'))
+				localStorageTodos.splice(id, 1);
+				localStorage.setItem('todos', JSON.stringify(localStorageTodos));
+				ownProps.history.push('/');
+			}
 	};
 };
 

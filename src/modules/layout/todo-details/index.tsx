@@ -7,8 +7,7 @@ import {compose} from 'redux';
 
 const TodoDetail: React.FC = (props) => {
 
-	const {todo, id, creatorID, todoStatus} = props;
-
+	const {todo, id, creatorID, todoStatus, logeidInUserID} = props;
 
 	const deleteTodo = () => {
 		props.deleteTodo(id, creatorID);
@@ -50,7 +49,14 @@ const TodoDetail: React.FC = (props) => {
 
 const mapStateToProps = (state, ownProps) => {
 	const id = ownProps.match.params.id;
-	const todos = state.firestore.data.todos;
+	const logeidInUserID = state.firebase.auth.uid
+	let todos;
+	if(logeidInUserID) {
+		todos =	state.firestore.data.todos;
+	}else {
+		todos = JSON.parse(localStorage.getItem('todos'))
+	}
+
 	const todo = todos ? todos[id] : null;
 	const creatorID = todos && todo ? todo.creatorID : null;
 	const todoStatus = todos && todo ? todo.finished : null;
@@ -58,7 +64,8 @@ const mapStateToProps = (state, ownProps) => {
 		id,
 		todo: todo,
 		creatorID,
-		todoStatus
+		todoStatus,
+		logeidInUserID : state.firebase.auth.uid
 	};
 };
 

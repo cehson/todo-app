@@ -4,8 +4,6 @@ export const createTodo = (todo, isLogedIn, ownProps) => {
 		const firestore = getFirestore();
 		const firebase = getFirebase();
 
-		console.log(isLogedIn);
-
 		if (!isLogedIn) {
 			firestore.collection('todos').add({
 				...todo,
@@ -29,11 +27,11 @@ export const createTodo = (todo, isLogedIn, ownProps) => {
 				dispatch({type: 'CREATE_TODO_ERROR', err});
 			});
 		} else {
-			console.log('ovdje radim sa localhostom');
 			let todos = JSON.parse(localStorage.getItem('todos'));
 			if (todos == null) todos = [];
 			todos.push(todo);
 			localStorage.setItem('todos', JSON.stringify(todos));
+			ownProps.history.push('/');
 		}
 	};
 };
