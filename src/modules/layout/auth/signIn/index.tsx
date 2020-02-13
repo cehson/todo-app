@@ -30,7 +30,7 @@ const SignIn: React.FC = (props) => {
 const {authError} = props;
 
 return (
-	<div className='container'>
+	<div className='container' style={{gridArea: 'container' }}>
 		<h1 className='margin_t_2 title is-1'>Sign in form</h1>
 		<form method='POST' onSubmit={handleSubmit}>
 			<div className='field'>

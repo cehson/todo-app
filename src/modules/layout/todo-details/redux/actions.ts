@@ -23,14 +23,19 @@ export const deleteTodo = (id: number, creatorID: number, ownProps) => {
 	};
 };
 
-export const finishTodo = (id: number, todoStatus) => {
+export const finishTodo = (id: number, creatorID, todoStatus) => {
 	return (dispatch: any, getState: any, {getFirestore, getFirebase}) => {
-		const firestore = getFirestore();
-		firestore.collection('todos').doc(id).update({finished: !todoStatus}).then(
-			() => {
-				dispatch({type: 'UPDATE_TODO'});
-			}
-		);
-
+		if (creatorID) {
+			const firestore = getFirestore();
+			firestore.collection('todos').doc(id).update({finished: !todoStatus}).then(
+				() => {
+					dispatch({type: 'UPDATE_TODO'});
+				}
+			);
+		}else {
+			let localStorageTodos = JSON.parse(localStorage.getItem('todos'))
+			 localStorageTodos[id].finished = !localStorageTodos[id].finished;
+			localStorage.setItem('todos', JSON.stringify(localStorageTodos));
+		}
 	};
 };

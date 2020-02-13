@@ -7,11 +7,8 @@ import {firestoreConnect} from 'react-redux-firebase';
 import './style/style.scss';
 
 const Dashboard: React.FC = ({todoList, userList, loggedInUserID}) => {
-	// ========= state ==================
 
 	let todoLista = [];
-
-
 
 	if (loggedInUserID) {
 		if (todoList && todoList.todos) {
@@ -20,11 +17,11 @@ const Dashboard: React.FC = ({todoList, userList, loggedInUserID}) => {
 			});
 		}
 	} else {
-		todoLista =  JSON.parse( localStorage.getItem( 'todos' ) )
+		todoLista =  JSON.parse( localStorage.getItem( 'todos' ) );
 	}
 
 	return (
-		<div>
+		<div style={{overflow: 'auto', height: '100%'}}>
 			<TodoList creatorUID={loggedInUserID} todos={todoLista}/>
 		</div>
 	);

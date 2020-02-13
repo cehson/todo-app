@@ -2,11 +2,96 @@
   text-align: left;
 }
 
-.main-nav{
+.main-nav {
+  background-color: #00D1B2;
+  padding: 0 30px;
+
+  .navbar {
+    min-height: auto;
+    background: transparent;
+  }
+
+  nav {
+    height: 100%;
+  }
+
   a {
     color: #ffffff;
+
     &:hover {
       color: blue;
     }
   }
+}
+
+.page_wrapper {
+  height: 100vh;
+
+  &__inner {
+    height: 100%;
+    overflow: hidden;
+
+    .layout {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      grid-template-rows: 50px 1fr;
+      grid-template-areas: 'menu nav' 'menu container';
+      height: 100%;
+    }
+  }
+}
+
+.menu {
+  grid-area: menu;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.sidebarMenu {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 50px 0 0;
+  text-align: center;
+
+  li {
+    color: #ffffff;
+    padding: 10px 3px;
+
+    &:hover {
+      background-color: #00D1B2;
+
+      a {
+        color: #ffffff;
+      }
+    }
+
+    a {
+      color: #555;
+
+      .svg-inline--fa {
+        width: 20px !important;
+        height: 20px !important;
+      }
+
+      h5 {
+        font-size: 11px;
+        margin-top: 3px;
+      }
+    }
+  }
+}
+
+.section {
+  &-inner {
+    max-height: 100%;
+    overflow-y: auto;
+  }
+}
+
+.todoListTable {
+    tr {
+      td {
+        padding: 20px 10px;
+      }
+    }
 }

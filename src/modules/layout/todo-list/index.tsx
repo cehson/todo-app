@@ -3,6 +3,7 @@ import {useDebounce} from 'use-debounce';
 import Todo from '../todo-details/redux/types';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 const TodoList = ({todos, isLogedIn}) => {
 
@@ -16,19 +17,6 @@ const TodoList = ({todos, isLogedIn}) => {
 	const [searchbYFilter] = useDebounce(filterBy, 400);
 	const [searchByStatus] = useDebounce(filterByStatus, 400);
 
-	// const statusFilter = (event) => {
-	//
-	// 	let updatedValue = event.currentTarget.value;
-	//
-	// 	if (updatedValue === "true" || updatedValue == "false") {
-	// 		updatedValue = JSON.parse(updatedValue);
-	// 		setFilterByStatus(updatedValue);
-	// 	}
-	// 	todos = todos.filter(el => {
-	// 		return el.finished === updatedValue;
-	// 	});
-	// };
-
 	function compare(a, b) {
 		const timeA = a.scheduledTime;
 		const timeB = b.scheduledTime;
@@ -41,10 +29,9 @@ const TodoList = ({todos, isLogedIn}) => {
 		return comparison;
 	}
 
-
 	return (
 		<section className='section'>
-			<div className='container'>
+			<div className='section-inner'>
 				<div style={{marginBottom: '40px'}}>
 					<div className='field' style={{maxWidth: '200px', display: 'inline-block'}}>
 						<div className='control'>
@@ -86,7 +73,7 @@ const TodoList = ({todos, isLogedIn}) => {
 					</thead>
 					<tbody>
 					{
-						todos  && isLogedIn && todos.length ? todos.sort(compare).filter((todo) => {
+						todos && isLogedIn && todos.length ? todos.sort(compare).filter((todo) => {
 							if (searchByStatus === 'all') {
 								return todos;
 							} else {
@@ -98,14 +85,20 @@ const TodoList = ({todos, isLogedIn}) => {
 							return (
 								<tr key={index + 1} className={todo.finished ? 'finished' : ''}>
 									<td>{index + 1}</td>
-									<td>{todo.id }</td>
+									<td>{todo.id}</td>
 									<td>{todo.content}</td>
 									<td>{new Date(todo.scheduledTime).toDateString()}</td>
 									<td>{todo.finished ? 'Finished' : 'Not finished'}</td>
-									<td><Link to={'todo/' + todo.id}>Go to</Link></td>
+									<td><Link to={'todo/' + todo.id}>	<FontAwesomeIcon icon='external-link-alt'/></Link></td>
 								</tr>
 							);
-						}) : todos  && !isLogedIn && todos.map((todo: Todo, index: number) => {
+						}) : todos && !isLogedIn && todos.filter((todo) => {
+							if (searchByStatus === 'all') {
+								return todos;
+							} else {
+								return todo && todo.finished === JSON.parse(searchByStatus);
+							}
+						}).map((todo: Todo, index: number) => {
 							return (
 								<tr key={index + 1} className={todo.finished ? 'finished' : ''}>
 									<td>{index + 1}</td>
@@ -113,8 +106,12 @@ const TodoList = ({todos, isLogedIn}) => {
 									<td>{todo.content}</td>
 									<td>{new Date(todo.scheduledTime).toDateString()}</td>
 									<td>{todo.finished ? 'Finished' : 'Not finished'}</td>
-									<td><Link to={'todo/' + todos.findIndex(function(item) {
-										return item.content === todo.content;	}) }>Go to</Link></td>
+									<td>
+										<Link to={'todo/' + todos.findIndex(function (item) {
+											return item.content === todo.content;
+										})}>
+											<FontAwesomeIcon icon='external-link-alt'/>
+										</Link></td>
 								</tr>
 							);
 						})

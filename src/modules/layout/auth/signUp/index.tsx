@@ -34,7 +34,7 @@ const SignUp: React.FC = (props) => {
 	};
 
 	return (
-		<div className='container'>
+		<div className='container' style={{gridArea: 'container' }}>
 			<h1 className='margin_t_2 title is-1'>Sign up form</h1>
 			<form onSubmit={handleSubmit}>
 				<div className='field'>

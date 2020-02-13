@@ -6,6 +6,7 @@ import {createTodo} from './redux/todoActions';
 import Todo from '../todo-details/redux/types';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+
 const CreateTodo = (props) => {
 
 	const {value: content, bind: bindcontent, reset: resetcontent} = useForm('');
@@ -33,7 +34,7 @@ const CreateTodo = (props) => {
 	}
 
 	return (
-		<div>
+		<div style={{gridArea: 'container' }}>
 			<div className='container'>
 				<h1 className='margin_t_2 title is-1'>Create</h1>
 				<form onSubmit={handleSubmit}>

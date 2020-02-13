@@ -1,22 +1,33 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 const SignedOutLinks: React.FC = (props) => {
 	return (
-		<ul className='navbar-menu display_flex display_flex-justify-content--flex-end'>
-			<li className='navbar-item'>
+		<ul className='sidebarMenu' style={{textAlign: 'center'}}>
+			<li>
+				<Link to='/'>
+					<FontAwesomeIcon icon='list-ul'/>
+					<h5>Todos</h5>
+				</Link>
+			</li>
+			<li>
 				<Link to='/create/'>
-					Create
+					<FontAwesomeIcon icon='plus-circle'/>
+					<h5>Create</h5>
 				</Link>
 			</li>
-			<li className='navbar-item'>
+			<li style={{marginTop: 'auto'}}>
 				<Link to='/signin/'>
-					Sign in
+					<FontAwesomeIcon icon='sign-in-alt'/>
+					<h5>Sign in</h5>
+
 				</Link>
 			</li>
-			<li className='navbar-item'>
+			<li>
 				<Link to='/signup/'>
-					Sign up
+					<FontAwesomeIcon icon='user-plus'/>
+					<h5>Sign up</h5>
 				</Link>
 			</li>
 		</ul>

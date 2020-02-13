@@ -1,20 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {firestoreConnect} from 'react-redux-firebase';
 import {deleteTodo, finishTodo} from './redux/actions';
 import {withRouter} from 'react-router';
 import {compose} from 'redux';
 
+
+
 const TodoDetail: React.FC = (props) => {
 
 	const {todo, id, creatorID, todoStatus, logeidInUserID} = props;
-
 	const deleteTodo = () => {
 		props.deleteTodo(id, creatorID);
 	};
 
 	const finishTodo = () => {
-		props.finishTodo(id, todoStatus);
+		props.finishTodo(id, todoStatus, creatorID);
 	};
 
 	if (todo) {
@@ -49,12 +50,12 @@ const TodoDetail: React.FC = (props) => {
 
 const mapStateToProps = (state, ownProps) => {
 	const id = ownProps.match.params.id;
-	const logeidInUserID = state.firebase.auth.uid
+	const logeidInUserID = state.firebase.auth.uid;
 	let todos;
-	if(logeidInUserID) {
+	if (logeidInUserID) {
 		todos =	state.firestore.data.todos;
-	}else {
-		todos = JSON.parse(localStorage.getItem('todos'))
+	} else {
+		todos = JSON.parse(localStorage.getItem('todos'));
 	}
 
 	const todo = todos ? todos[id] : null;
@@ -72,7 +73,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, id, creatorID, ownProps) => {
 	return {
 		deleteTodo: (id, creatorID, ownProps) => dispatch(deleteTodo(id, creatorID, ownProps)),
-		finishTodo: (id, todoStatus) => dispatch(finishTodo(id, todoStatus))
+		finishTodo: (id, creatorID, todoStatus) => dispatch(finishTodo(id, todoStatus, creatorID))
 	};
 };
 
