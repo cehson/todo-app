@@ -20,7 +20,7 @@ const SignedInLinks: React.FC = (props) => {
 				</Link>
 			</li>
 			<li style={{marginTop: 'auto'}}>
-				<a onClick={props.signOut}>
+				<a href='#' onClick={props.signOut}>
 					<FontAwesomeIcon icon='sign-out-alt'/>
 					<h5>Sign out</h5>
 				</a>

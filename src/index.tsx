@@ -46,8 +46,6 @@ const store = createStore(rootReducer,
       reduxFirestore(firebase)
     ));
 
-
-
     const rrfProps = {
         firebase,
         config: rrfConfig,

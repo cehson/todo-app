@@ -5,8 +5,7 @@ import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {firestoreConnect} from 'react-redux-firebase';
 import './style/style.scss';
-
-const Dashboard: React.FC = ({todoList, userList, loggedInUserID}) => {
+const Dashboard: React.FC = ({todoList, loggedInUserID}) => {
 
 	let todoLista = [];
 

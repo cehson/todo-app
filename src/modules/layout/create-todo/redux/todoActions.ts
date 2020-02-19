@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 export const createTodo = (todo, isLogedIn, ownProps) => {
 	return (dispatch: any, getState: any, {getFirestore, getFirebase}) => {
 		// make async call to database
@@ -20,11 +21,14 @@ export const createTodo = (todo, isLogedIn, ownProps) => {
 				userRef.update({
 					todos: firebase.firestore.FieldValue.arrayUnion(...todoArray)
 				});
-				ownProps.history.push('/');
 				dispatch({type: 'CREATE_TODO', todo: todo});
-
+				toast.success("TODO created succesfully!Redirecting to todo list...");
+				setTimeout(() => {
+					ownProps.history.push('/');
+				}, 1200);
 			}).catch((err) => {
 				dispatch({type: 'CREATE_TODO_ERROR', err});
+				toast.error("ERROR OCURED CREATING A TODO");
 			});
 		} else {
 			let todos = JSON.parse(localStorage.getItem('todos'));
@@ -32,6 +36,7 @@ export const createTodo = (todo, isLogedIn, ownProps) => {
 			todos.push(todo);
 			localStorage.setItem('todos', JSON.stringify(todos));
 			ownProps.history.push('/');
+			toast.success("TODO CREATED SUCCESSFULY");
 		}
 	};
 };

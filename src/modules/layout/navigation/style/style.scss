@@ -1,0 +1,12 @@
+.navbar-item {
+  display: flex;
+  align-items: center;
+  color: #4a4a4a;
+  line-height: 1.5;
+  padding: .5rem .75rem;
+  position: relative;
+  img {
+    width: 43px;
+    height: 43px;
+  }
+}

@@ -1,56 +1,95 @@
 import React, {useState} from 'react';
 import useForm from '../../../const/useForm';
 import {connect} from 'react-redux';
-import { withRouter } from 'react-router';
+import {withRouter} from 'react-router';
 import {createTodo} from './redux/todoActions';
+import CheckForm from '../../../const/checkForm';
 import Todo from '../todo-details/redux/types';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import './style/style.scss';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {toast} from 'react-toastify';
 
-const CreateTodo = (props) => {
-
-	const {value: content, bind: bindcontent, reset: resetcontent} = useForm('');
+const CreateTodo: React.FC = (props) => {
 
 	const [startDate, setStartDate] = useState(new Date());
-	const handleSubmit = (evt: any) => {
-		evt.preventDefault();
+	const stateSchema = {
+		content: {value: '', error: ''}
+	};
+	const validationStateSchema = {
+		content: {
+			required: true,
+			validator: {
+				regEx: /^[\s\S]{0,100}$/,
+				error: 'Invalid content!'
+			}
+		}
+	};
 
-		props.createTodo({
-				content: content,
-				scheduledTime: + startDate,
-				creatorID: props.loggedInUserID,
-				authorFirstName: props.authorFirstName,
-				authorLastName: props.authorLastName,
-				finished: false
-			},
-			// tslint:disable-next-line:indent
-			 props.isLogedIn
-		);
-		resetcontent();
+	const onSubmitForm = () => {
+
+		if (state.content.value && state.content.value.length) {
+			setTimeout(() => {
+			props.createTodo({
+					content: state.content.value,
+					scheduledTime: +startDate,
+					creatorID: props.loggedInUserID,
+					authorFirstName: props.authorFirstName,
+					authorLastName: props.authorLastName,
+					finished: false
+				},
+				props.isLogedIn
+			);
+			}, 1100);
+		} else {
+			toast.error('PLEASE FILL UP THE FORM CORRECTLY!');
+			setTimeout(() => {
+			}, 1100);
+		}
+
 	};
 
 	const handleDateChange = (date: Date) => {
 		setStartDate(date);
-	}
+	};
+
+	const {state, handleOnChange, handleOnSubmit, disable} = CheckForm(
+		stateSchema,
+		validationStateSchema,
+		onSubmitForm
+	);
+	const errorStyle = {
+		color: 'red',
+		fontSize: '13px'
+	};
 
 	return (
-		<div style={{gridArea: 'container' }}>
-			<div className='container'>
-				<h1 className='margin_t_2 title is-1'>Create</h1>
-				<form onSubmit={handleSubmit}>
+		<div style={{gridArea: 'container'}}>
+			<div className='createForm'>
+				<h1 className='margin_t_2 title is-1'>Create Todo</h1>
+				<form className='margin_t_2' onSubmit={handleOnSubmit}>
 					<div className='field'>
 						<label className='label'>Todo content</label>
 						<div className='control has-icons-left has-icons-right'>
-							<input className='input' name='content' type='text' placeholder='Todo content'   {...bindcontent} />
+							<input className='input'
+								   name='content'
+								   type='text'
+								   placeholder='Todo content'
+								   value={state.content.value}
+								   onChange={handleOnChange}
+							/>
 							<span className='icon is-small is-left'>
                                 <i className='fas fa-content fa-xs'></i>
                             </span>
+							{state.content.error && <p style={errorStyle}>{state.content.error}</p>}
 						</div>
 					</div>
 					<div className='field margin_t_2'>
 						<label className='label'>Scheduled time</label>
 						<div className='control has-icons-left has-icons-right'>
-							<DatePicker selected={startDate} onChange={handleDateChange} />
+							<DatePicker selected={startDate} onChange={handleDateChange}/>
 							<span className='icon is-small is-left'>
                                 <i className='fas fa-clock fa-xs'></i>
                             </span>
@@ -58,14 +97,14 @@ const CreateTodo = (props) => {
 					</div>
 					<div className='field is-grouped margin_t_2'>
 						<p className='control'>
-							<button type='submit' className='button is-primary'>
+							<button type='submit' disabled={disable} className='button is-primary'>
 								Submit
 							</button>
 						</p>
 					</div>
 				</form>
-
 			</div>
+			<ToastContainer autoClose={1100}/>
 		</div>
 	);
 };
@@ -85,7 +124,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 };
 
 const mapStateToProps = (state: any) => {
-	console.log(state);
 	return {
 		loggedInUserID: state.firebase.auth.uid,
 		authorFirstName: state.firebase.profile.firstName,

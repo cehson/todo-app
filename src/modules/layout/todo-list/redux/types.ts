@@ -1,9 +1,8 @@
-import Todo from '../../todo-details/redux/types'
+import Todo from '../../todo-details/redux/types';
 
-export interface TodoList {
-    todos: Todo[{}]
-  }
-  
+export default interface TodosList {
+	todos: Todo[];
+	isLogedIn: string;
+}
 
-  
-  
+

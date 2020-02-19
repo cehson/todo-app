@@ -17,7 +17,7 @@ const todoListReducer = (state = initState, action) => {
 			return {...state};
 
 		case 'DELETE_TODO' :
-			console.log('todo deleted!' + action.creatorID);
+			console.log('todo deleted!' + action.id);
 			return {...state};
 		case 'UPDATE_TODO' :
 			console.log('UPDATE SUCCESFULL');

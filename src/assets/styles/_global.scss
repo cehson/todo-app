@@ -4,9 +4,14 @@ html {
 }
 a {
     color: #555555;
+    text-decoration: none;
     &:hover {
         text-decoration: underline;
     }
+}
+img {
+    display: block;
+    max-width: 100%;
 }
 .navbar-menu {
     display: flex;
@@ -26,21 +31,93 @@ a {
 /* width */
 ::-webkit-scrollbar {
     width: 5px;
+    height: 5px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey;
-    border-radius: 10px;
+    //border-radius: 10px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: #00D1B2;
-    border-radius: 10px;
+    //border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #00D1B2;
+}
+
+button.button {
+    color: #FFFFFF;
+    text-shadow: none;
+    font-size: 1rem;
+    cursor: pointer;
+    display: inline-block;
+    min-height: 1em;
+    outline: none;
+    border: none;
+    vertical-align: baseline;
+    background: #E0E1E2 none;
+    margin: 0em 0.25em 0em 0em;
+    padding: 0.78571429em 1.5em 0.78571429em;
+    text-transform: none;
+    text-shadow: none;
+    font-weight: bold;
+    line-height: 1em;
+    font-style: normal;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 0.28571429rem;
+    -webkit-box-shadow: 0px 0px 0px 1px transparent inset, 0px 0em 0px 0px rgba(34, 36, 38, 0.15) inset;
+    box-shadow: 0px 0px 0px 1px transparent inset, 0px 0em 0px 0px rgba(34, 36, 38, 0.15) inset;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease, background 0.1s ease, -webkit-box-shadow 0.1s ease;
+    transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease, background 0.1s ease, -webkit-box-shadow 0.1s ease;
+    transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+    transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease, box-shadow 0.1s ease, background 0.1s ease, -webkit-box-shadow 0.1s ease;
+    -webkit-tap-highlight-color: transparent;
+    &:hover {
+        opacity: 0.9;
+    }
+}
+
+button.button.is-primary {
+    background-color: #21BA45;
+}
+button.button.is-facebook {
+    background-color: #4267B2;
+}
+button.button.is-danger {
+    background-color: #D9534F;
+}
+
+.field {
+    padding: 10px 0 20px;
+    &.is-grouped {
+        display: flex;
+    }
+    button {
+        margin-right: 20px;
+    }
+    label {
+        display: inline-block;
+        margin-bottom: 6px;
+        font-size: 15px;
+        font-weight: 600;
+    }
+    .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        svg {
+            margin-left: -4px;
+        }
+    }
 }

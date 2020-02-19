@@ -3,6 +3,7 @@ import SignedInLinks from './signedInLinks/index';
 import SignedOutLinks from './signedOutLinks/index';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import './style/style.scss';
 import FacebookImage from './faceimage';
 
 const Navigation: React.FC = (props) => {

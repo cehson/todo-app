@@ -1,3 +1,5 @@
+import {toast} from 'react-toastify';
+
 export const signIn = (credentials, ownProps) => {
 
 	return (dispatch, getState, {getFirebase, getFirestore}) => {
@@ -16,23 +18,27 @@ export const signIn = (credentials, ownProps) => {
 						.get()
 						.then((res) => {
 							let data = res.docs.map(function (documentSnapshot) {
-								return {...documentSnapshot.data(), id:documentSnapshot.id};
+								return {...documentSnapshot.data(), id: documentSnapshot.id};
 							});
-							dispatch({type: 'GET_DATA_FROM_USER', data})
+							dispatch({type: 'GET_DATA_FROM_USER', data});
 						});
 				}
-			)
+			);
 			// IF SUCCESS DISPATCH ACTION "LOGIN_SUCCESS"
-			ownProps.history.push('/');
-			dispatch({type: 'LOGIN_SUCCESS', res});
+			toast.success('Signed in Succesfully!');
+			setTimeout(() => {
+				ownProps.history.push('/');
+				dispatch({type: 'LOGIN_SUCCESS', res});
+			}, 2100);
 
 		}).catch((err) => {
+			toast.error('Sign in failed! ' + err.message);
 			dispatch({type: 'LOGIN_ERROR', err});
 		});
 	};
 };
 
-export  const  signInWithFacebook = (ownProps) => {
+export const signInWithFacebook = (ownProps) => {
 
 	return (dispatch, getState, {getFirebase, getFirestore}) => {
 		const firebase = getFirebase();
@@ -46,8 +52,8 @@ export  const  signInWithFacebook = (ownProps) => {
 
 		// ownProps.history.push('/');
 		// dispatch({type: 'LOGIN_WITH_FB_SUCCESS'});
-	}
-}
+	};
+};
 
 export const signOut = () => {
 	return (dispatch, getState, {getFirebase}) => {

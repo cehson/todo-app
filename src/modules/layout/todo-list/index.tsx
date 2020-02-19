@@ -4,8 +4,11 @@ import Todo from '../todo-details/redux/types';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import './style/style.scss';
+import TodosList from './redux/types';
 
-const TodoList = ({todos, isLogedIn}) => {
+
+const TodoList: React.FC<TodosList> = ({todos, isLogedIn}) => {
 
 	// ========= state ==================
 	let [searchValue, setSearchValue] = useState('');
@@ -32,8 +35,8 @@ const TodoList = ({todos, isLogedIn}) => {
 	return (
 		<section className='section'>
 			<div className='section-inner'>
-				<div style={{marginBottom: '40px'}}>
-					<div className='field' style={{maxWidth: '200px', display: 'inline-block'}}>
+				<div className='section-inner--filters field' style={{marginBottom: '40px'}}>
+					<div style={{maxWidth: '200px', display: 'inline-block'}}>
 						<div className='control'>
 							<input
 								className='input'
@@ -43,14 +46,14 @@ const TodoList = ({todos, isLogedIn}) => {
 						</div>
 					</div>
 
-					<div className='select' style={{marginLeft: '20px'}}>
+					<div className='control' style={{marginLeft: '20px'}}>
 						<select onChange={event => setFilterBy(event.target.value)}>
 							<option value='id'>By ID</option>
 							<option value='content'>By Content</option>
 						</select>
 					</div>
 
-					<div className='select' style={{marginLeft: '20px'}}>
+					<div className='control' style={{marginLeft: '20px'}}>
 						<select onChange={event => setFilterByStatus(event.target.value)}>
 							<option value='all'>Show all</option>
 							<option value='false'>Not finished</option>

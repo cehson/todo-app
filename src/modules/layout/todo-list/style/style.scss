@@ -1,0 +1,19 @@
+.section {
+  padding: 15px;
+  &-inner {
+    &--filters {
+      display: flex;
+    }
+  }
+}
+
+.todoListTable {
+  thead {
+    th {
+      font-size: 15px;
+      font-weight: 700;
+      padding: 10px;
+      text-align: left;
+    }
+  }
+}

@@ -15,19 +15,36 @@
 .margin {
   &_t {
     &_2 {
-      margin-top: 2rem;
+      margin-top: 2rem !important;
     }
 
     &_3 {
-      margin-top: 3rem;
+      margin-top: 3rem !important;
     }
 
     &_4 {
-      margin-top: 4rem;
+      margin-top: 4rem !important;
     }
 
     &_5 {
-      margin-top: 5rem;
+      margin-top: 5rem !important;
+    }
+  }
+  &_b {
+    &_2 {
+      margin-bottom: 2rem !important;
+    }
+
+    &_3 {
+      margin-bottom: 3rem !important;
+    }
+
+    &_4 {
+      margin-bottom: 4rem !important;
+    }
+
+    &_5 {
+      margin-bottom: 5rem !important;
     }
   }
 }
