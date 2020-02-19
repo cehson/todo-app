@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import useForm from '../../../const/useForm';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import {createTodo} from './redux/todoActions';
@@ -31,7 +30,7 @@ const CreateTodo: React.FC = (props) => {
 	const onSubmitForm = () => {
 
 		if (state.content.value && state.content.value.length) {
-			setTimeout(() => {
+
 			props.createTodo({
 					content: state.content.value,
 					scheduledTime: +startDate,
@@ -41,8 +40,7 @@ const CreateTodo: React.FC = (props) => {
 					finished: false
 				},
 				props.isLogedIn
-			);
-			}, 1100);
+		);
 		} else {
 			toast.error('PLEASE FILL UP THE FORM CORRECTLY!');
 			setTimeout(() => {
@@ -86,7 +84,7 @@ const CreateTodo: React.FC = (props) => {
 							{state.content.error && <p style={errorStyle}>{state.content.error}</p>}
 						</div>
 					</div>
-					<div className='field margin_t_2'>
+					<div className='field'>
 						<label className='label'>Scheduled time</label>
 						<div className='control has-icons-left has-icons-right'>
 							<DatePicker selected={startDate} onChange={handleDateChange}/>

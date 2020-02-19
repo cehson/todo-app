@@ -9,7 +9,6 @@ const initState: SignIn = {
 const signInReducer = (state = initState, action: SignInType): SignIn => {
 	switch (action.type) {
 		case 'LOGIN_SUCCESS' :
-			console.log('LOGIN SUCCESS');
 			return {
 				...state,
 				authError: false,

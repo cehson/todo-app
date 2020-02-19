@@ -7,7 +7,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import './style/style.scss';
 import TodosList from './redux/types';
 
-
 const TodoList: React.FC<TodosList> = ({todos, isLogedIn}) => {
 
 	// ========= state ==================
@@ -48,7 +47,9 @@ const TodoList: React.FC<TodosList> = ({todos, isLogedIn}) => {
 
 					<div className='control' style={{marginLeft: '20px'}}>
 						<select onChange={event => setFilterBy(event.target.value)}>
-							<option value='id'>By ID</option>
+							{
+								isLogedIn && isLogedIn.length ? <option value='id'>By ID</option> : ''
+							}
 							<option value='content'>By Content</option>
 						</select>
 					</div>
@@ -67,7 +68,10 @@ const TodoList: React.FC<TodosList> = ({todos, isLogedIn}) => {
 					<thead>
 					<tr>
 						<th>Number</th>
-						<th>Todo ID</th>
+						{
+							isLogedIn && isLogedIn.length ? <th>Todo ID</th> : ''
+						}
+
 						<th>Content</th>
 						<th>Date</th>
 						<th>Status</th>
@@ -76,7 +80,7 @@ const TodoList: React.FC<TodosList> = ({todos, isLogedIn}) => {
 					</thead>
 					<tbody>
 					{
-						todos && isLogedIn && todos.length ? todos.sort(compare).filter((todo) => {
+						todos  && todos.length  && isLogedIn && todos.length ? todos.filter((todo) => {
 							if (searchByStatus === 'all') {
 								return todos;
 							} else {
@@ -84,7 +88,7 @@ const TodoList: React.FC<TodosList> = ({todos, isLogedIn}) => {
 							}
 						}).filter((todo) => {
 							return todo && todo[`${searchbYFilter}`] && todo[`${searchbYFilter}`].indexOf(searchbYValue) ? todo[`${searchbYFilter}`].indexOf(searchbYValue) !== -1 : todos;
-						}).map((todo: Todo, index: number) => {
+						}).sort(compare).map((todo: Todo, index: number) => {
 							return (
 								<tr key={index + 1} className={todo.finished ? 'finished' : ''}>
 									<td>{index + 1}</td>
@@ -92,20 +96,21 @@ const TodoList: React.FC<TodosList> = ({todos, isLogedIn}) => {
 									<td>{todo.content}</td>
 									<td>{new Date(todo.scheduledTime).toDateString()}</td>
 									<td>{todo.finished ? 'Finished' : 'Not finished'}</td>
-									<td><Link to={'todo/' + todo.id}>	<FontAwesomeIcon icon='external-link-alt'/></Link></td>
+									<td><Link to={'todo/' + todo.id}> <FontAwesomeIcon icon='external-link-alt'/></Link></td>
 								</tr>
 							);
-						}) : todos && !isLogedIn && todos.filter((todo) => {
+						}) : todos && todos.length && !isLogedIn && todos.filter((todo) => {
 							if (searchByStatus === 'all') {
 								return todos;
 							} else {
 								return todo && todo.finished === JSON.parse(searchByStatus);
 							}
-						}).map((todo: Todo, index: number) => {
+						}).filter((todo) => {
+							return todo && todo[`${searchbYFilter}`] && todo[`${searchbYFilter}`].indexOf(searchbYValue) ? todo[`${searchbYFilter}`].indexOf(searchbYValue) !== -1 : todos;
+						}).sort(compare).map((todo: Todo, index: number) => {
 							return (
 								<tr key={index + 1} className={todo.finished ? 'finished' : ''}>
 									<td>{index + 1}</td>
-									<td></td>
 									<td>{todo.content}</td>
 									<td>{new Date(todo.scheduledTime).toDateString()}</td>
 									<td>{todo.finished ? 'Finished' : 'Not finished'}</td>

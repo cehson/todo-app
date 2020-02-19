@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import useInput from '../../../../const/useForm';
 import CheckForm from '../../../../const/checkForm';
 import {withRouter} from 'react-router';
 import {connect} from 'react-redux';

@@ -11,9 +11,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const TodoDetail: React.FC<Todo> = (props) => {
 
-	const {todo, id, creatorID, todoStatus, logeidInUserID} = props;
+	const {todo, id, creatorID, todoStatus} = props;
 	const deleteTodo = () => {
-		props.deleteTodo(id, creatorID);
+
+		if(id) {
+			props.deleteTodo(id, creatorID, props.history);
+		}
 	};
 
 	const finishTodo = () => {
@@ -47,7 +50,7 @@ const TodoDetail: React.FC<Todo> = (props) => {
 		return (
 			<section className='section'>
 				<div className='container'>
-					<h1 className='title'>Todo deleted!</h1>
+					<h1 className='title'>Todo not found!</h1>
 				</div>
 				<ToastContainer autoClose={2000} />
 			</section>
@@ -68,6 +71,7 @@ const mapStateToProps = (state, ownProps) => {
 	const todo = todos ? todos[id] : null;
 	const creatorID = todos && todo ? todo.creatorID : null;
 	const todoStatus = todos && todo ? todo.finished : null;
+
 	return {
 		id,
 		todo: todo,
@@ -79,7 +83,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, id, creatorID, ownProps) => {
 	return {
-		deleteTodo: (id, creatorID) => dispatch(deleteTodo(id, creatorID, ownProps)),
+		deleteTodo: (id, creatorID, history) => dispatch(deleteTodo(id, creatorID, history)),
 		finishTodo: (id, creatorID, todoStatus) => dispatch(finishTodo(id, todoStatus, creatorID))
 	};
 };
