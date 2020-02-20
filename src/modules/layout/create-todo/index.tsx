@@ -2,37 +2,54 @@ import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import {createTodo} from './redux/todoActions';
-import CheckForm from '../../../const/checkForm';
 import Todo from '../todo-details/redux/types';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './style/style.scss';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {toast} from 'react-toastify';
 
 const CreateTodo: React.FC = (props) => {
 
+	const [content, setContent] = useState('');
 	const [startDate, setStartDate] = useState(new Date());
-	const stateSchema = {
-		content: {value: '', error: ''}
-	};
-	const validationStateSchema = {
-		content: {
-			required: true,
-			validator: {
-				regEx: /^[\s\S]{0,100}$/,
-				error: 'Invalid content!'
-			}
+	const [error, setError] = useState(true);
+	const [regError, setRegError] = useState(false);
+
+	const regex = RegExp('^.{4,35}$');
+
+	function handleContentChange(e) {
+
+		if (e.target.value.length) {
+			setContent(e.target.value.trim());
+		} else {
+			setContent('');
 		}
+		if (content && content.length) {
+			setError(false);
+		} else {
+			setError(true);
+		}
+		if (!regex.test(content)) {
+			setRegError(true);
+		} else {
+			setRegError(false);
+		}
+	}
+
+	const handleDateChange = (date: Date) => {
+		setStartDate(date);
 	};
 
-	const onSubmitForm = () => {
-
-		if (state.content.value && state.content.value.length) {
-
+	const handleSubmit = (evt: any) => {
+		evt.preventDefault();
+		if (!content && !content.length) {
+			console.log('nije proslo');
+			return;
+		} else {
+			console.log('proslo !');
 			props.createTodo({
-					content: state.content.value,
+					content: content,
 					scheduledTime: +startDate,
 					creatorID: props.loggedInUserID,
 					authorFirstName: props.authorFirstName,
@@ -40,49 +57,31 @@ const CreateTodo: React.FC = (props) => {
 					finished: false
 				},
 				props.isLogedIn
-		);
-		} else {
-			toast.error('PLEASE FILL UP THE FORM CORRECTLY!');
-			setTimeout(() => {
-			}, 1100);
+			);
 		}
 
 	};
 
-	const handleDateChange = (date: Date) => {
-		setStartDate(date);
-	};
-
-	const {state, handleOnChange, handleOnSubmit, disable} = CheckForm(
-		stateSchema,
-		validationStateSchema,
-		onSubmitForm
-	);
 	const errorStyle = {
 		color: 'red',
-		fontSize: '13px'
+		fontSize: '13px',
+		marginTop: '10px'
 	};
 
 	return (
 		<div style={{gridArea: 'container'}}>
 			<div className='createForm'>
 				<h1 className='margin_t_2 title is-1'>Create Todo</h1>
-				<form className='margin_t_2' onSubmit={handleOnSubmit}>
-					<div className='field'>
+				<form onSubmit={handleSubmit}>
+					<div className='field margin_t_2'>
 						<label className='label'>Todo content</label>
 						<div className='control has-icons-left has-icons-right'>
-							<input className='input'
-								   name='content'
-								   type='text'
-								   placeholder='Todo content'
-								   value={state.content.value}
-								   onChange={handleOnChange}
-							/>
+							<input value={content} onChange={handleContentChange} className='input' name='content' type='text' placeholder='Todo content'/>
 							<span className='icon is-small is-left'>
                                 <i className='fas fa-content fa-xs'></i>
                             </span>
-							{state.content.error && <p style={errorStyle}>{state.content.error}</p>}
 						</div>
+						{regError && <p style={errorStyle}>Todo must be long between 4 and 35 characters!</p>}
 					</div>
 					<div className='field'>
 						<label className='label'>Scheduled time</label>
@@ -95,7 +94,7 @@ const CreateTodo: React.FC = (props) => {
 					</div>
 					<div className='field is-grouped margin_t_2'>
 						<p className='control'>
-							<button type='submit' disabled={disable} className='button is-primary'>
+							<button type='submit' className='button is-primary' disabled={error}>
 								Submit
 							</button>
 						</p>

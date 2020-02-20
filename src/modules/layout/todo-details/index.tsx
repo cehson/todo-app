@@ -14,7 +14,7 @@ const TodoDetail: React.FC<Todo> = (props) => {
 	const {todo, id, creatorID, todoStatus} = props;
 	const deleteTodo = () => {
 
-		if(id) {
+		if (id) {
 			props.deleteTodo(id, creatorID, props.history);
 		}
 	};
@@ -58,14 +58,14 @@ const TodoDetail: React.FC<Todo> = (props) => {
 	}
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state: { firebase: { auth: { uid: any; }; }; firestore: { data: { todos: any; }; }; }, ownProps: { match: { params: { id: any; }; }; }) => {
 	const id = ownProps.match.params.id;
 	const logeidInUserID = state.firebase.auth.uid;
 	let todos;
 	if (logeidInUserID) {
 		todos = state.firestore.data.todos;
 	} else {
-		todos = JSON.parse(localStorage.getItem('todos'));
+		todos = JSON.parse(localStorage.getItem('todos') as string);
 	}
 
 	const todo = todos ? todos[id] : null;
@@ -81,10 +81,10 @@ const mapStateToProps = (state, ownProps) => {
 	};
 };
 
-const mapDispatchToProps = (dispatch, id, creatorID, ownProps) => {
+const mapDispatchToProps = (dispatch: { (arg0: (dispatch: (arg0: { type: string; id: number; }) => void, getState: any, { getFirestore, getFirebase }: any) => void): void; (arg0: (dispatch: any, getState: any, { getFirestore, getFirebase }: { getFirestore: any; getFirebase: any; }) => void): void; }) => {
 	return {
-		deleteTodo: (id, creatorID, history) => dispatch(deleteTodo(id, creatorID, history)),
-		finishTodo: (id, creatorID, todoStatus) => dispatch(finishTodo(id, todoStatus, creatorID))
+		deleteTodo: (id: number, creatorID: number, history: string[]) => dispatch(deleteTodo(id, creatorID, history)),
+		finishTodo: (id: number, creatorID: any, todoStatus: any) => dispatch(finishTodo(id, todoStatus, creatorID))
 	};
 };
 

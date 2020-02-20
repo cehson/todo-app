@@ -3,7 +3,17 @@ export default interface Todo {
 	creatorID: string;
 	content: string;
 	scheduledTime: number;
-	finished: boolean;
+	todoStatus: boolean;
 	authorFirstName: string;
 	authorLastName: string;
+	history: {};
+	todo?: {
+		finished: boolean,
+		authorFirstName: string,
+		authorLastName: string,
+		content: string,
+		scheduledTime: number
+	};
+	deleteTodo: (id: string, creatorId: string, history: any) => {};
+	finishTodo: (id: string, todoStatus: boolean, creatorID: string) => {};
 }

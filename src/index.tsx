@@ -5,7 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import signInReducer from './modules/layout/auth/signIn/redux/signInReducer';
 import signUpReducer from './modules/layout/auth/signUp/redux/signUpReducer';
-import todoListReducer from './modules/layout/todo-list/redux/reducer';
+// import todoListReducer from './modules/layout/todo-list/redux/reducer';
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import {createFirestoreInstance, reduxFirestore, getFirestore, firestoreReducer} from 'redux-firestore';
 import {ReactReduxFirebaseProvider, getFirebase, firebaseReducer, isLoaded} from 'react-redux-firebase';
@@ -16,7 +16,7 @@ import {Provider, useSelector} from 'react-redux';
 const rootReducer = combineReducers({
 	signIn: signInReducer,
 	signUp: signUpReducer,
-	todoList: todoListReducer,
+	// todoList: todoListReducer,
 	firestore: firestoreReducer,
 	firebase: firebaseReducer
 });
