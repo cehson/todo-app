@@ -20,7 +20,7 @@ const TodoDetail: React.FC<Todo> = (props) => {
 	};
 
 	const finishTodo = () => {
-		props.finishTodo(id, todoStatus, creatorID);
+		props.finishTodo(id, todoStatus, creatorID, props.historyy);
 	};
 
 	if (todo) {
@@ -84,11 +84,11 @@ const mapStateToProps = (state: { firebase: { auth: { uid: any; }; }; firestore:
 const mapDispatchToProps = (dispatch: { (arg0: (dispatch: (arg0: { type: string; id: number; }) => void, getState: any, { getFirestore, getFirebase }: any) => void): void; (arg0: (dispatch: any, getState: any, { getFirestore, getFirebase }: { getFirestore: any; getFirebase: any; }) => void): void; }) => {
 	return {
 		deleteTodo: (id: number, creatorID: number, history: string[]) => dispatch(deleteTodo(id, creatorID, history)),
-		finishTodo: (id: number, creatorID: any, todoStatus: any) => dispatch(finishTodo(id, todoStatus, creatorID))
+		finishTodo: (id: number, creatorID: any, todoStatus: any, history: string[]) => dispatch(finishTodo(id, todoStatus, creatorID, history))
 	};
 };
 
-export default  withRouter(compose(
+export default  withRouter<any, any>(compose(
 	connect(mapStateToProps, mapDispatchToProps),
 	firestoreConnect([{collection: 'todos'}])
 )(TodoDetail));
