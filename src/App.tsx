@@ -20,6 +20,16 @@ const App: React.FC = (props) => {
 	} else {
 		links = <SignedOutLinks/>;
 	}
+
+	const isAuthenticated = props.isLogedIn;
+	const PrivateRoute = ({component: Component, ...rest}) => (
+		<Route {...rest} render={(props) => (
+			isAuthenticated
+				? <Redirect to='/'/>
+				: <Component {...props} />
+		)}/>
+	);
+
 	return (
 		<BrowserRouter>
 			<main className='page_wrapper'>
@@ -32,10 +42,11 @@ const App: React.FC = (props) => {
 						<Switch>
 							<Route key='home' exact path='/' component={Dashboard}/>
 							<Route key='todo' path='/todo/:id' component={TodoDetails}/>
-							<Route key='signin' path='/signin/' component={SignIn}/>
+							<PrivateRoute path='/signin' component={SignIn}/>
 							<Route key='signup' path='/signup/' component={SignUp}/>
 							<Route key='create' path='/create/' component={CreateTodo}/>
 							<Route key='not_found' component={NotFound}/>
+
 						</Switch>
 					</div>
 				</div>

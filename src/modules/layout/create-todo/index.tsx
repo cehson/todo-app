@@ -9,6 +9,10 @@ import './style/style.scss';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+interface CreateTodo {
+	content: string;
+}
+
 const CreateTodo: React.FC = (props) => {
 
 	const [content, setContent] = useState('');
@@ -18,19 +22,19 @@ const CreateTodo: React.FC = (props) => {
 
 	const regex = RegExp('^.{4,35}$');
 
-	function handleContentChange(e) {
+	function handleContentChange(e: any) {
 
 		if (e.target.value.length) {
-			setContent(e.target.value.trim());
+			setContent(e.target.value);
 		} else {
 			setContent('');
 		}
-		if (content && content.length) {
+		if (content && content.length && e.target.value.length > 4) {
 			setError(false);
 		} else {
 			setError(true);
 		}
-		if (!regex.test(content)) {
+		if (!regex.test(content) && !regex.test(e.target.value)) {
 			setRegError(true);
 		} else {
 			setRegError(false);
@@ -44,10 +48,8 @@ const CreateTodo: React.FC = (props) => {
 	const handleSubmit = (evt: any) => {
 		evt.preventDefault();
 		if (!content && !content.length) {
-			console.log('nije proslo');
 			return;
 		} else {
-			console.log('proslo !');
 			props.createTodo({
 					content: content,
 					scheduledTime: +startDate,
@@ -65,7 +67,7 @@ const CreateTodo: React.FC = (props) => {
 	const errorStyle = {
 		color: 'red',
 		fontSize: '13px',
-		marginTop: '10px'
+		marginTop: '7px'
 	};
 
 	return (

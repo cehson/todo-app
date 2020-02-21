@@ -4,8 +4,10 @@ import {withRouter} from 'react-router';
 import {connect} from 'react-redux';
 import {signUp} from './redux/actions';
 import './style/style.scss';
+import User from './types/types'
 import {signUpWithFacebook} from './redux/actions';
 import FacebookLogin from 'react-facebook-login';
+
 
 const SignUp: React.FC = (props) => {
 
@@ -51,7 +53,7 @@ const SignUp: React.FC = (props) => {
 		props.signUpWithFacebook();
 	};
 
-	function onSubmitForm(state) {
+	function onSubmitForm(state: User) {
 		const newUser = {
 			name: state.name.value,
 			surname: state.surname.value,

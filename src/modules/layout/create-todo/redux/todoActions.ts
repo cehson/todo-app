@@ -1,5 +1,7 @@
 import { toast } from 'react-toastify';
-export const createTodo = (todo, isLogedIn, ownProps) => {
+import Todo from '../types/types';
+export const createTodo = (todo: Todo, isLogedIn: string, ownProps: any) => {
+	// @ts-ignore
 	return (dispatch: any, getState: any, {getFirestore, getFirebase}) => {
 		// make async call to database
 		const firestore = getFirestore();
@@ -22,21 +24,21 @@ export const createTodo = (todo, isLogedIn, ownProps) => {
 					todos: firebase.firestore.FieldValue.arrayUnion(...todoArray)
 				});
 				dispatch({type: 'CREATE_TODO', todo: todo});
-				toast.success("TODO created succesfully!Redirecting to todo list...");
+				toast.success('TODO created succesfully!Redirecting to todo list...');
 				setTimeout(() => {
 					ownProps.history.push('/');
 				}, 1200);
-			}).catch((err) => {
+			}).catch((err: any) => {
 				dispatch({type: 'CREATE_TODO_ERROR', err});
-				toast.error("ERROR OCURED CREATING A TODO");
+				toast.error('ERROR OCURED CREATING A TODO');
 			});
 		} else {
-			let todos = JSON.parse(localStorage.getItem('todos'));
+			let todos = JSON.parse(<string>localStorage.getItem('todos'));
 			if (todos == null) todos = [];
 			todos.push(todo);
 			localStorage.setItem('todos', JSON.stringify(todos));
 			ownProps.history.push('/');
-			toast.success("TODO CREATED SUCCESSFULY");
+			toast.success('TODO CREATED SUCCESSFULY');
 		}
 	};
 };

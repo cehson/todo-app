@@ -12,6 +12,11 @@
   tr {
     td {
       padding: 17px 5px;
+      border-bottom: 1px solid rgba(0,0,0,0.15);
+      &:first-child {
+        padding-left: 30px;
+        font-weight: 600;
+      }
     }
 
     &:not(.finished) {
