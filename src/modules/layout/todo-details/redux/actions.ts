@@ -12,7 +12,7 @@ export const deleteTodo = (id: number, creatorID: number, history: string[]) => 
 					todos: firebase.firestore.FieldValue.arrayRemove(id)
 				});
 				dispatch({type: 'DELETE_TODO', id: creatorID});
-				toast.error('TODO deleted!');
+				toast.error('TODO DELETED SUCCESSFULLY!');
 				if (history) history.push('/');
 			}).catch((err: { message: string; }) => {
 				toast.error('ERROR DELETING TODO OCCURED! ' + err.message);
@@ -21,6 +21,7 @@ export const deleteTodo = (id: number, creatorID: number, history: string[]) => 
 			let localStorageTodos = JSON.parse(<string>localStorage.getItem('todos'));
 			localStorageTodos.splice(id, 1);
 			localStorage.setItem('todos', JSON.stringify(localStorageTodos));
+			toast.success('TODO DELETED SUCCESSFULLY!');
 			setTimeout(() => {
 				if (history) history.push('/');
 			}, 2000);
@@ -36,14 +37,14 @@ export const finishTodo = (id: number, creatorID: any, todoStatus: any, history)
 			firestore.collection('todos').doc(id).update({finished: !todoStatus}).then(
 				() => {
 					dispatch({type: 'UPDATE_TODO'});
-					toast.success('UPDATE SUCCESSFULL');
+					toast.success('UPDATE SUCCESSFUL');
 				}
 			);
 		} else {
 			let localStorageTodos = JSON.parse(<string>localStorage.getItem('todos'));
 			localStorageTodos[id].finished = !localStorageTodos[id].finished;
 			localStorage.setItem('todos', JSON.stringify(localStorageTodos));
-			toast.success('UPDATE SUCCESSFULL');
+			toast.success('UPDATE SUCCESSFUL');
 			setTimeout(() => {
 				if (history) history.push('/');
 			}, 1000);

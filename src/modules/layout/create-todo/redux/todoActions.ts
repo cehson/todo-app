@@ -24,13 +24,13 @@ export const createTodo = (todo: Todo, isLogedIn: string, ownProps: any) => {
 					todos: firebase.firestore.FieldValue.arrayUnion(...todoArray)
 				});
 				dispatch({type: 'CREATE_TODO', todo: todo});
-				toast.success('TODO created succesfully!Redirecting to todo list...');
+				toast.success('TODO created successfully!Redirecting to todo list...');
 				setTimeout(() => {
 					ownProps.history.push('/');
 				}, 1200);
 			}).catch((err: any) => {
 				dispatch({type: 'CREATE_TODO_ERROR', err});
-				toast.error('ERROR OCURED CREATING A TODO');
+				toast.error('ERROR OCCURRED CREATING A TODO');
 			});
 		} else {
 			let todos = JSON.parse(<string>localStorage.getItem('todos'));
@@ -38,7 +38,7 @@ export const createTodo = (todo: Todo, isLogedIn: string, ownProps: any) => {
 			todos.push(todo);
 			localStorage.setItem('todos', JSON.stringify(todos));
 			ownProps.history.push('/');
-			toast.success('TODO CREATED SUCCESSFULY');
+			toast.success('TODO CREATED SUCCESSFULLY');
 		}
 	};
 };

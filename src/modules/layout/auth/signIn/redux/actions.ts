@@ -25,7 +25,7 @@ export const signIn = (credentials, ownProps) => {
 				}
 			);
 			// IF SUCCESS DISPATCH ACTION "LOGIN_SUCCESS"
-			toast.success('Signed in Succesfully!');
+			toast.success('SIGNED IN SUCCESSFULLY!');
 			setTimeout(() => {
 				ownProps.history.push('/');
 				dispatch({type: 'LOGIN_SUCCESS', res});
