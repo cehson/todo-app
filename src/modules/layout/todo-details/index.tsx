@@ -20,7 +20,7 @@ const TodoDetail: React.FC<Todo> = (props) => {
 	};
 
 	const finishTodo = () => {
-		props.finishTodo(id, todoStatus, creatorID, props.historyy);
+		props.finishTodo(id, todoStatus, creatorID, props.history);
 	};
 
 	if (todo) {
@@ -52,7 +52,7 @@ const TodoDetail: React.FC<Todo> = (props) => {
 				<div className='container'>
 					<h1 className='title'>Todo not found!</h1>
 				</div>
-				<ToastContainer autoClose={2000} />
+				<ToastContainer autoClose={1000} />
 			</section>
 		);
 	}

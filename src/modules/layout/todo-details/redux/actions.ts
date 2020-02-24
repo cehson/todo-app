@@ -28,10 +28,9 @@ export const deleteTodo = (id: number, creatorID: number, history: string[]) => 
 	};
 };
 
-export const finishTodo = (id: number, creatorID: any, todoStatus: any, history: string[]) => {
+export const finishTodo = (id: number, creatorID: any, todoStatus: any, history) => {
 
-	// @ts-ignore
-	return (dispatch: any, getState: any, {getFirestore, getFirebase}) => {
+	return (dispatch: any, getState: any, {getFirestore}) => {
 		if (creatorID) {
 			const firestore = getFirestore();
 			firestore.collection('todos').doc(id).update({finished: !todoStatus}).then(
@@ -47,8 +46,7 @@ export const finishTodo = (id: number, creatorID: any, todoStatus: any, history:
 			toast.success('UPDATE SUCCESSFULL');
 			setTimeout(() => {
 				if (history) history.push('/');
-			}, 2000);
-
+			}, 1000);
 		}
 	};
 };

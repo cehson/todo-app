@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {useDebounce} from 'use-debounce';
 import Todo from '../todo-details/redux/types';
 import {connect} from 'react-redux';
@@ -23,9 +23,9 @@ const TodoList: React.FC<TodosList> = ({todos, isLogedIn}) => {
 		const timeA = a.scheduledTime;
 		const timeB = b.scheduledTime;
 		let comparison = 0;
-		if (timeA > timeB) {
+		if (timeA < timeB) {
 			comparison = -1;
-		} else if (timeA < timeB) {
+		} else if (timeA > timeB) {
 			comparison = 1;
 		}
 		return comparison;
@@ -71,7 +71,6 @@ const TodoList: React.FC<TodosList> = ({todos, isLogedIn}) => {
 						{
 							isLogedIn && isLogedIn.length ? <th>Todo ID</th> : ''
 						}
-
 						<th>Content</th>
 						<th>Date</th>
 						<th>Status</th>
