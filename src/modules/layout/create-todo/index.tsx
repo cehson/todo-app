@@ -88,7 +88,10 @@ const CreateTodo: React.FC = (props) => {
 					<div className='field'>
 						<label className='label'>Scheduled time</label>
 						<div className='control has-icons-left has-icons-right'>
-							<DatePicker selected={startDate} onChange={handleDateChange}/>
+							<DatePicker
+								selected={startDate}
+								minDate={new Date()}
+								onChange={handleDateChange}/>
 							<span className='icon is-small is-left'>
                                 <i className='fas fa-clock fa-xs'></i>
                             </span>
